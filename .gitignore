@@ -1,4 +1,11 @@
+# C#
 **/.idea
-**/_build
 **/cs/**/bin
 **/cs/**/obj
+
+# OCaml
+**/_build
+
+# Rust
+**/target
+

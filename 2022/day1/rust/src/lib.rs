@@ -1,7 +1,5 @@
 use std::{io::BufRead, num::ParseIntError, ops::Index, str::FromStr};
 
-type FmtError = std::fmt::Error;
-
 #[derive(Debug, Clone, Default)]
 pub struct Top3 {
     items: [isize; 3],

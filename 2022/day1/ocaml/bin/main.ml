@@ -3,7 +3,6 @@ open Aoc2022day1
 let () =
   if Array.length Sys.argv == 1 then begin
     print_endline "Expected input file as command-line argument";
-    flush stdout;
     exit 1;
   end;
 
@@ -21,6 +20,7 @@ let () =
       print_endline "\nSum of top 3:";
       print_int (top3.a + top3.b + top3.c);
       print_newline ();
+      close_in ic;
       exit 0
     with e ->
       close_in_noerr ic;

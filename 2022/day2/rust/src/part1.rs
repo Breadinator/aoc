@@ -1,6 +1,6 @@
 use crate::*;
 
-fn calculate_move(enemy_move: Move, friendly_move: Move) -> isize {
+pub fn calculate_move(enemy_move: Move, friendly_move: Move) -> isize {
     friendly_move as isize
         + if friendly_move == enemy_move {
             // draw

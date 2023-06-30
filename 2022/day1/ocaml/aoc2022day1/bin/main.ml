@@ -10,7 +10,7 @@ let () =
   let path = Array.get Sys.argv 1 in
   let ic = open_in path in
     try
-      print_int (Reader.read ic [] 0);
+      print_int (Reader.read ic 0 0);
       print_newline ();
       flush stdout;
       close_in ic;

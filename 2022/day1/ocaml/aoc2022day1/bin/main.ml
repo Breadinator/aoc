@@ -1,4 +1,4 @@
-include Aoc2022day1;;
+open Aoc2022day1
 
 let () =
   if Array.length Sys.argv == 1 then begin

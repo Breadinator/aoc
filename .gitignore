@@ -21,3 +21,6 @@
 
 # C++
 **/cpp/**/*.exe
+
+# Python
+**/python/**/__pycache__

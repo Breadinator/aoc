@@ -9,3 +9,15 @@
 # Rust
 **/target
 
+# Zig
+# Adapted from https://github.com/ziglang/zig/blob/master/.gitignore
+**/zig/**/zig-cache/
+**/zig/**/zig-out/
+**/zig/**/release/
+**/zig/**/debug/
+**/zig/**/build/
+**/zig/**/build-*/
+**/zig/**/docgen_tmp/
+
+# C++
+**/cpp/**/*.exe

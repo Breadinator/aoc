@@ -1,23 +1,29 @@
 from collections.abc import Iterable
 from io import TextIOWrapper
 import pathlib
+import sys
 
 def main():
-    answer = -1
+    part = sys.argv[1] if len(sys.argv) != 1 else None
     path = get_path()
-    with open(path, 'r', encoding='utf-8') as file:
-        answer = solve_file(file)
-        file.close()
-    print(answer)
+
+    if part == "1" or part is None:
+        with open(path, 'r', encoding='utf-8') as file:
+            print(part1_solve_file(file))
+            file.close()
+    if part == "2" or part is None:
+        with open(path, 'r', encoding='utf-8') as file:
+            print(part2_solve_file(file))
+            file.close()
 
 
 def get_path():
     return pathlib.Path(__file__).parent.parent.resolve() / "input.txt"
 
-def solve_file(file: TextIOWrapper) -> int:
-    return solve_iter(yield_lines(file))
+def part1_solve_file(file: TextIOWrapper) -> int:
+    return part1_solve_iter(yield_lines(file))
 
-def solve_iter(iterable: Iterable[str]) -> int:
+def part1_solve_iter(iterable: Iterable[str]) -> int:
     acc = 0
     for bag in iterable:
         acc += get_set_priority(get_common_elements(bag))
@@ -43,6 +49,21 @@ def get_set_priority(chars: set[str]) -> int:
 def get_common_elements(bag: str) -> set[str]:
     comp_len = len(bag) // 2
     return {x for x in bag[:comp_len] if x in bag[comp_len:]}
+
+def part2_solve_file(file: TextIOWrapper) -> int:
+    return part2_solve_iter(yield_lines(file))
+
+def part2_solve_iter(iterable: Iterable[str]) -> int:
+    acc = 0
+    while True:
+        try:
+            block: tuple[str, str, str] = (next(iterable), next(iterable), next(iterable))
+            # might be better to use a hashset? idk what python uses for sets under the hood
+            common = {x for x in block[0] if x in block[1] and x in block[2]}
+            acc += get_priority(common.pop())
+        except StopIteration:
+            break
+    return acc
 
 if __name__ == "__main__":
     main()

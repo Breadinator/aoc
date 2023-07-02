@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from aoc22d3 import solve_iter
+from aoc22d3 import part1_solve_iter
 
 def run_tests():
     test(
@@ -16,7 +16,7 @@ def run_tests():
     )
 
 def test(test_number: int, expected: int, inputs: Iterable[str]):
-    assert solve_iter(inputs) == expected
+    assert part1_solve_iter(inputs) == expected
     print(f"Passed test {test_number}")
 
 if __name__ == "__main__":

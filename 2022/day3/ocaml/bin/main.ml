@@ -11,23 +11,27 @@ let () =
     | Some "2" -> 2
     | _ -> 0 in
 
-    if part != 1 then begin
-        print_endline "Part 2 not supported, please put \"1\" in the argument after the path.";
-        exit 1
-    end;
-
     let path = Array.get Sys.argv 1 in
-    let ic = open_in path in
+    if part == 1 || part == 0 then begin
+        let ic = open_in path in
         try
-            if part == 0 || part == 1 then begin
-                let answer = Part1.solve(ic) in
-                print_int answer;
-                print_newline ()
-            end;
-
-            close_in ic;
-            exit 0
+            let answer = Part1.solve ic in
+            print_int answer;
+            print_newline ();
+            close_in ic
         with e ->
             close_in_noerr ic;
             raise e
+    end;
+    if part == 2 || part == 0 then begin
+        let ic = open_in path in
+        try
+            let answer = Part2.solve ic in
+            print_int answer;
+            print_newline ();
+            close_in ic
+        with e->
+            close_in_noerr ic;
+            raise e
+    end;
 

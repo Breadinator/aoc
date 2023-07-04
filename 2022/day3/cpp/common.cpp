@@ -16,7 +16,7 @@ int getPart(int argc, char *argv[]) {
 }
 
 int getCharPriority(char ch) {
-    if (ch > 'Z') { // forgot that uppercase chars come earlier for a min lmao 🤦‍♀️
+    if (ch > 'Z') {
         return ch - 'a' + 1;
     }
     else {

@@ -5,9 +5,11 @@ pub fn solve(file: impl BufRead) -> i32 {
     let mut lines = file.lines();
     let mut acc = 0;
     loop {
-        match (lines.next(), lines.next(), lines.next()) {
-            (Some(Ok(a)), Some(Ok(b)), Some(Ok(c))) => acc += handle_block(a, b, c),
-            _ => return acc,
+        if let (Some(Ok(a)), Some(Ok(b)), Some(Ok(c))) = (lines.next(), lines.next(), lines.next())
+        {
+            acc += handle_block(a, b, c);
+        } else {
+            return acc;
         }
     }
 }

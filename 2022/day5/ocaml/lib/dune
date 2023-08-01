@@ -1,3 +1,4 @@
 (library
  (name aoc22d5)
- (libraries str))
+ (libraries core str)
+ (preprocess (pps ppx_compare ppx_sexp_conv)))

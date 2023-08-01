@@ -1,3 +1,5 @@
-(test
- (name aoc22d5)
- (libraries aoc22d5))
+(library
+ (name aoc22d5_tests)
+ (libraries aoc22d5 core)
+ (inline_tests)
+ (preprocess (pps ppx_inline_test ppx_assert ppx_sexp_conv)))

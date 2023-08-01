@@ -1,0 +1,3 @@
+(test
+ (name aoc22d5)
+ (libraries aoc22d5))

@@ -8,7 +8,7 @@ let%test_unit "basic" =
         " 1   2 "
     ] in
     let expected = Ok (Array.of_list [['A'; 'C']; ['B'; 'D']]) in
-    [%test_eq: (char list array, Common.parse_crates_error) Result.t] res expected
+    [%test_eq: (char list array, Common.parse_error) Result.t] res expected
 
 let%test_unit "real" =
     let res = Common.parse_crates [
@@ -33,5 +33,5 @@ let%test_unit "real" =
         ['M'; 'R'; 'N'; 'J'; 'D'; 'W'; 'H'; 'Z'];
         ['S'; 'D'; 'F'; 'L'; 'Q'; 'M']
     ]) in
-    [%test_eq: (char list array, Common.parse_crates_error) Result.t] res expected
+    [%test_eq: (char list array, Common.parse_error) Result.t] res expected
 

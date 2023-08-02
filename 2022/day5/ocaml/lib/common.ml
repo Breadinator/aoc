@@ -19,15 +19,19 @@ type crane_operation = {
 }
 [@@deriving compare, sexp]
 
-type parse_crates_error =
+type parse_error =
     | InvalidCrateConfiguration
     | InvalidValue of char
-[@@deriving compare, sexp]
-
-type parse_operation_error =
     | DidntMatchTemplate of string
     | CouldntParseInt of string
 [@@deriving compare, sexp]
+
+type error =
+    | ParseError of parse_error
+[@@deriving compare, sexp]
+
+let result_wrap res =
+    Result.map_error (fun e -> ParseError e) res
 
 let get_opt arr idx =
     if idx < Array.length arr then Some (Array.get arr idx)
@@ -42,6 +46,14 @@ let print_stacks stacks =
         | [] -> print_newline ()
     in
     Array.iter print_stack stacks
+
+let fold_stacks (stacks : char list array) : string =
+    let fold_stack (stack : char list) : char =
+        List.hd stack
+    in
+    Array.map fold_stack stacks
+    |> Array.to_seq
+    |> String.of_seq
 
 (** Parses the initial configuration of crates.
 
@@ -87,7 +99,7 @@ let parse_operation line =
     end
     | _ -> Error (DidntMatchTemplate line)
 
-let solve _crane ic =
+let solve crane ic =
     (** This just takes the first lines of the input, up until the first empty line. *)
     let rec input_starting_positions ic acc =
         let temp = input_line ic in
@@ -95,13 +107,21 @@ let solve _crane ic =
         else input_starting_positions ic (acc @ [temp])
     in
 
-    let stacks = input_starting_positions ic []
-    |> parse_crates in
-
-    let _ = match stacks with
-    | Ok stacks -> print_stacks stacks
-    | Error err -> sexp_of_parse_crates_error err |> Core.Sexp.to_string |> print_endline
+    (** Iterates through the lines and applies the operations. *)
+    let rec apply_operations stacks =
+        match input_line ic with
+        | line -> begin
+            parse_operation line
+            |> result_wrap
+            >>= (fun x -> crane x stacks)
+            >>=|> apply_operations
+        end
+        | exception End_of_file -> Ok stacks
     in
 
-    ""
+    input_starting_positions ic []
+    |> parse_crates
+    |> (Result.map_error (fun e -> ParseError e))
+    >>=|> apply_operations
+    |> Result.map fold_stacks
 

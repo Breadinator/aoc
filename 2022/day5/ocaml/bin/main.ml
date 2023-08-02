@@ -11,6 +11,7 @@ let () =
     let ic = open_in path in
     try
         Common.solve crane ic
+        |> Result.get_ok
         |> print_endline;
         close_in ic
     with e ->

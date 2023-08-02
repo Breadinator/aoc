@@ -1,2 +1,2 @@
-let crane _crates _operation =
-    ()
+let crane _operation crates =
+    Ok crates

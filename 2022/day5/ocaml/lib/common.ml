@@ -12,6 +12,7 @@ let compare_string = Core.compare_string
 let string_of_sexp = Core.string_of_sexp
 let sexp_of_string = Core.sexp_of_string
 
+(** `n` is indexed starting at 1, not 0. *)
 type crane_operation = {
     n: int;
     from_idx: int;
@@ -28,7 +29,10 @@ type parse_error =
 
 type error =
     | ParseError of parse_error
+    | IndexOutOfBounds of crane_operation
 [@@deriving compare, sexp]
+
+type crane_func = crane_operation -> char list array -> (char list array, error) result
 
 let result_wrap res =
     Result.map_error (fun e -> ParseError e) res
@@ -47,8 +51,8 @@ let print_stacks stacks =
     in
     Array.iter print_stack stacks
 
-let fold_stacks (stacks : char list array) : string =
-    let fold_stack (stack : char list) : char =
+let fold_stacks stacks =
+    let fold_stack stack =
         List.hd stack
     in
     Array.map fold_stack stacks

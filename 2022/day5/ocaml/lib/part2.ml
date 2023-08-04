@@ -1,5 +1,12 @@
 open Common
 
 let crane operation crates =
-    Printf.printf "move %d from %d to %d\n" operation.n operation.from_idx operation.to_idx;
-    Ok crates
+    if operation.from_idx > 0 && operation.to_idx <= Array.length crates then
+        take_n crates.(operation.from_idx - 1) operation.n
+        |> fun (modified, taken) ->
+            crates.(operation.from_idx - 1) <- modified;
+            crates.(operation.to_idx - 1) <- push_to crates.(operation.to_idx - 1) (List.rev taken);
+            Ok crates
+    else
+        Error (IndexOutOfBounds operation)
+

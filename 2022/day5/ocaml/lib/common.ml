@@ -103,6 +103,24 @@ let parse_operation line =
     end
     | _ -> Error (DidntMatchTemplate line)
 
+(** Returns `(modified original stack, taken stack)`.
+
+E.g.: `take_n [1; 2; 3; 4; 5] 3 == [4; 5], [1; 2; 3]`*)
+let rec take_n crate n =
+    match n, crate with
+    | 0, _ -> crate, []
+    | _, [] -> [], []
+    | n, hd :: tl -> take_n tl (n - 1)
+    |> fun (a, b) -> a, hd :: b
+
+(** `crate` is the `'a list` to push to, `stack` is the `'a list` whose items are being pushed to.
+
+E.g.: `push_to [1; 2; 3] [4; 5] == [5; 4; 1; 2; 3]` *)
+let rec push_to crate stack =
+    match stack with
+    | [] -> crate
+    | hd :: tl -> push_to (hd :: crate) tl
+
 let solve crane ic =
     (** This just takes the first lines of the input, up until the first empty line. *)
     let rec input_starting_positions ic acc =

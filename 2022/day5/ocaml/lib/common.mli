@@ -37,4 +37,6 @@ val fold_stacks : char list array -> string
 
 (* utilities *)
 val get_opt : 'a array -> int -> 'a option
+val take_n : 'a list -> int -> 'a list * 'a list
+val push_to : 'a list -> 'a list -> 'a list
 

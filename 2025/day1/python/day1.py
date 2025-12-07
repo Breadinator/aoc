@@ -49,7 +49,6 @@ class Cracker:
 
         return times_zero
 
-
 def parse_rotation(s: str) -> Rotation:
     if len(s) < 2:
         raise Exception(f"input of `{s}` is too short")
@@ -62,13 +61,12 @@ def parse_rotation(s: str) -> Rotation:
     amount = int(s[1:])
     return Rotation(direction, amount)
 
-def part1(s: str):
+def main(s: str):
     rotations = [parse_rotation(line) for line in s.splitlines()]
     cracker = Cracker(rotations)
     print(cracker.part1())
     print(cracker.part2())
 
-
 if __name__ == '__main__':
     with open("../input.txt", "r") as f:
-        part1(f.read())
+        main(f.read())
